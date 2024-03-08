@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spiral Text Animation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add any additional CSS styles for your characters if needed */
+        body, html {
+    height: 100%;
+    margin: 0;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+.spiral {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes spiral {
+    0% {
+        --angle: 0deg;
+    }
+    100% {
+        --angle: 360deg;
+    }
+}
+
+.character {
+    color: white;
+    font-size: 4em;
+    transform: translateY(calc(sin(var(--angle)) * 100px)) scale(calc(cos(var(--angle)) * 0.5 + 0.5));
+    animation: spiral 4s linear infinite;
+}
+        .character {
+            display: inline-block;
+            font-size: 48px;
+            /* Add more styles as required */
+        }
+
+        .spiral-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="spiral" class="spiral-container"></div>
+    <div id="spiral2" class="spiral-container"></div>
+    <script >
+        const words = "Luthor Tech"; // Add more words if needed
+
+const ANIMATION_DURATION = 2000; // Define your animation duration in milliseconds
+
+function createElements(offset) {
+    const characters = words.split("");
+    characters.forEach((char, i) => {
+        const div = document.createElement("div");
+        div.innerText = char;
+        div.classList.add("character");
+        div.style.animationDelay = `-${i * (ANIMATION_DURATION / 16) - offset}ms`;
+
+        if (offset >= 0) {
+            document.getElementById("spiral").appendChild(div);
+        } else {
+            document.getElementById("spiral2").appendChild(div);
+        }
+    });
+}
+
+createElements(0);
+createElements(-1 * (ANIMATION_DURATION / 2));
+</script>
+</body>
+</html>
